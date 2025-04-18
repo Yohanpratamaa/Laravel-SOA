@@ -40,13 +40,13 @@ class OrderController extends Controller
         // Validate user
         $userResponse = Http::get('http://localhost:8000/api/users/' . $request->user_id);
         if (!$userResponse->successful()) {
-            return response()->json(['error' => 'User not found'], 404);
+            return response()->json(['error' => 'User Tidak Ditemukan !'], 404);
         }
 
         // Validate product
         $productResponse = Http::get('http://localhost:8001/api/products/' . $request->product_id);
         if (!$productResponse->successful()) {
-            return response()->json(['error' => 'Product not found'], 404);
+            return response()->json(['error' => 'Produk Tidak Ditemukan !'], 404);
         }
 
         $order = Order::create($request->all());
@@ -58,7 +58,7 @@ class OrderController extends Controller
     {
         $order = Order::find($id);
         if (!$order) {
-            return response()->json(['error' => 'Order not found'], 404);
+            return response()->json(['error' => 'Order Tidak Ditemukan !'], 404);
         }
 
         $request->validate([
@@ -72,7 +72,7 @@ class OrderController extends Controller
         if ($request->has('user_id')) {
             $userResponse = Http::get('http://localhost:8000/api/users/' . $request->user_id);
             if (!$userResponse->successful()) {
-                return response()->json(['error' => 'User not found'], 404);
+                return response()->json(['error' => 'User Tidak Ditemukan !'], 404);
             }
         }
 
@@ -80,7 +80,7 @@ class OrderController extends Controller
         if ($request->has('product_id')) {
             $productResponse = Http::get('http://localhost:8001/api/products/' . $request->product_id);
             if (!$productResponse->successful()) {
-                return response()->json(['error' => 'Product not found'], 404);
+                return response()->json(['error' => 'Produk Tidak Ditemukan !'], 404);
             }
         }
 
@@ -93,10 +93,10 @@ class OrderController extends Controller
     {
         $order = Order::find($id);
         if (!$order) {
-            return response()->json(['error' => 'Order not found'], 404);
+            return response()->json(['error' => 'Order Tidak Ditemukan !'], 404);
         }
 
         $order->delete();
-        return response()->json(['message' => 'Order deleted']);
+        return response()->json(['message' => 'Order berhasil dihapus']);
     }
 }
