@@ -19,7 +19,7 @@ class UserController extends Controller
     {
         $user = User::find($id);
         if (!$user) {
-            return response()->json(['error' => 'User not found'], 404);
+            return response()->json(['error' => 'Pengguna Tidak Ditemukan'], 404);
         }
 
         // Consume OrderService to get user orders
@@ -37,10 +37,12 @@ class UserController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email'
+            'email' => 'required|email|unique:users,email',
+            'alamat' => 'required|string|max:255',
+            'notelp' => 'required|string|max:12',
         ]);
 
-        $user = User::create($request->only(['name', 'email']));
+        $user = User::create($request->only(['name', 'email', 'alamat', 'notelp']));
         return response()->json($user, 201);
     }
 
@@ -49,15 +51,17 @@ class UserController extends Controller
     {
         $user = User::find($id);
         if (!$user) {
-            return response()->json(['error' => 'User not found'], 404);
+            return response()->json(['error' => 'Pengguna Tidak Ditemukan'], 404);
         }
 
         $request->validate([
             'name' => 'string|max:255',
-            'email' => 'email|unique:users,email,' . $id
+            'email' => 'email|unique:users,email,' . $id,
+            'alamat' => 'string|max:255',
+            'notelp' => 'string|max:12',
         ]);
 
-        $user->update($request->only(['name', 'email']));
+        $user->update($request->only(['name', 'email', 'alamat', 'notelp']));
         return response()->json($user);
     }
 
@@ -66,7 +70,7 @@ class UserController extends Controller
     {
         $user = User::find($id);
         if (!$user) {
-            return response()->json(['error' => 'User not found'], 404);
+            return response()->json(['error' => 'Pengguna Tidak Ditemukan'], 404);
         }
 
         // Check if user has orders
