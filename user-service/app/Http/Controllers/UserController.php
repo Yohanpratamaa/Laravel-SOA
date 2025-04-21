@@ -21,15 +21,7 @@ class UserController extends Controller
         if (!$user) {
             return response()->json(['error' => 'Pengguna Tidak Ditemukan'], 404);
         }
-
-        // Consume OrderService to get user orders
-        $response = Http::get('http://localhost:8002/api/orders/user/' . $id);
-        $orders = $response->successful() ? $response->json() : [];
-
-        return response()->json([
-            'user' => $user,
-            'orders' => $orders
-        ]);
+        return response()->json(['user' => $user]);
     }
 
     // POST: Create a new user
